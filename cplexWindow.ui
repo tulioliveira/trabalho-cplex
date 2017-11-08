@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>678</width>
-    <height>399</height>
+    <width>680</width>
+    <height>495</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>360</y>
+      <x>490</x>
+      <y>460</y>
       <width>168</width>
       <height>27</height>
      </rect>
@@ -44,9 +44,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>10</y>
       <width>651</width>
-      <height>341</height>
+      <height>347</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -65,11 +65,57 @@
       </layout>
      </item>
      <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string># Cidades:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelCities">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>População Mínima:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelMinPop">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>População Máxima:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelMaxPop">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QLabel" name="fixed_cost1">
          <property name="text">
-          <string>Custo Fixo L1:</string>
+          <string>Custo Fixo CF:</string>
          </property>
         </widget>
        </item>
@@ -183,7 +229,7 @@
        <item>
         <widget class="QLabel" name="capacity1">
          <property name="text">
-          <string>Capacidade N1:</string>
+          <string>Capacidade a:</string>
          </property>
         </widget>
        </item>
@@ -240,7 +286,7 @@
        <item>
         <widget class="QLabel" name="capacity2">
          <property name="text">
-          <string>Capacidade N2:</string>
+          <string>Capacidade b:</string>
          </property>
         </widget>
        </item>

@@ -87,10 +87,18 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 	def stateComboBoxChange(self):
 		item = self.stateInput.currentText()
 		if (item == ""):
+			self.labelCities.setText("")
+			self.labelMinPop.setText("")
+			self.labelMaxPop.setText("")
 			return -1
 		else:
-			return item.split("-")[0]
-
+			stateId = item.split("-")[0]
+			state = self.db.get_state_by_id(stateId)
+			self.labelCities.setText(str(state["nCities"]))
+			self.labelMinPop.setText(str(state["minPop"]))
+			self.labelMaxPop.setText(str(state["maxPop"]))
+			return stateId
+		
 	def inputChanged(self,currentInput):
 		########## PASSAR O VALOR DO ERRO PRA RUNPRESSED ############
 		currentText = currentInput.text()

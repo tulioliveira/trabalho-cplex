@@ -23,6 +23,13 @@ class DB(object):
         states = [[row[0], str(row[1])] for row in cur.fetchall()]
         return states
 
+    def get_state_by_id(self, ufid):
+        cur = self.conn.cursor()
+        cur.execute("select * from states where id = '{_ufid}'".format(_ufid=ufid))
+        row = cur.fetchone()
+        state = {"id": row[0], "uf": row[1], "name": row[2], "nCities": row[3], "minPop": row[4], "maxPop": row[5]}
+        return state
+
     def get_cities(self, ufid):
         cur = self.conn.cursor()
         cur.execute(
