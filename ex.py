@@ -3,7 +3,7 @@
 
 import sys
 import db
-from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton, QApplication, QMainWindow, QDialog, QMessageBox)
+from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton, QApplication, QMainWindow, QDialog, QMessageBox, QLineEdit)
 from PyQt5.QtGui import *	
 from PyQt5.QtWebEngine import *
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -42,23 +42,53 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 		self.db=db.DB('database.sqlite')
 		self.setWindowTitle("CPLEX")
 		self.setupUi(self)
-		self.cancelLabel.clicked.connect(self.cancelPressed)
-		self.runLabel.clicked.connect(lambda:self.runPressed())
-		self.fixed_cost1_lb.textChanged.connect(lambda:self.inputChanged(self.fixed_cost1_lb))
-		self.fixed_cost1_ub.textChanged.connect(lambda:self.inputChanged(self.fixed_cost1_ub))
-		self.fixed_cost2_lb.textChanged.connect(lambda:self.inputChanged(self.fixed_cost2_lb))
-		self.fixed_cost2_ub.textChanged.connect(lambda:self.inputChanged(self.fixed_cost2_ub))
-		self.capacity1_lb.textChanged.connect(lambda:self.inputChanged(self.capacity1_lb))
-		self.capacity1_ub.textChanged.connect(lambda:self.inputChanged(self.capacity1_ub))
-		self.capacity2_lb.textChanged.connect(lambda:self.inputChanged(self.capacity2_lb))
-		self.capacity2_ub.textChanged.connect(lambda:self.inputChanged(self.capacity2_ub))
-		self.demand_ub.textChanged.connect(lambda:self.inputChanged(self.demand_ub))
-		self.demand_lb.textChanged.connect(lambda:self.inputChanged(self.demand_lb))
-		self.numbernode1_lb.textChanged.connect(lambda:self.inputChanged(self.numbernode1_lb))
-		self.numbernode1_ub.textChanged.connect(lambda:self.inputChanged(self.numbernode1_ub))
-		self.numbernode2_lb.textChanged.connect(lambda:self.inputChanged(self.numbernode2_lb))
-		self.numbernode2_ub.textChanged.connect(lambda:self.inputChanged(self.numbernode2_ub))
-		self.productsclient_ub.textChanged.connect(lambda:self.inputChanged(self.productsclient_ub))
+		self.cancelButton.clicked.connect(lambda:self.cancelPressed)
+		self.runButton.clicked.connect(lambda:self.runPressed())
+		
+		intRegex = QRegExp("[1-9]+[0-9]*")
+		priceRegex = QRegExp("([1-9]{1}[0-9]*\,{1}[0-9]{1,2}|[0]{1}\,{1}[0-9]{1,2})")
+		self.inputSupplyPopMin.setValidator(QRegExpValidator(intRegex, self))
+		self.inputSupplyPopMin.textChanged.connect(lambda: self.inputChanged(self.inputSupplyPopMin))
+		self.inputSupplyPopMax.setValidator(QRegExpValidator(intRegex, self))
+		self.inputSupplyPopMax.textChanged.connect(lambda: self.inputChanged(self.inputSupplyPopMax))
+		self.inputFacilityPopMin.setValidator(QRegExpValidator(intRegex, self))
+		self.inputFacilityPopMin.textChanged.connect(lambda: self.inputChanged(self.inputFacilityPopMin))
+		self.inputFacilityPopMax.setValidator(QRegExpValidator(intRegex, self))
+		self.inputFacilityPopMax.textChanged.connect(lambda: self.inputChanged(self.inputFacilityPopMax))
+		self.inputDemandPopMin.setValidator(QRegExpValidator(intRegex, self))
+		self.inputDemandPopMin.textChanged.connect(lambda: self.inputChanged(self.inputDemandPopMin))
+		self.inputDemandPopMax.setValidator(QRegExpValidator(intRegex, self))
+		self.inputDemandPopMax.textChanged.connect(lambda: self.inputChanged(self.inputDemandPopMax))
+		self.input_a_min.setValidator(QRegExpValidator(intRegex, self))
+		self.input_a_min.textChanged.connect(lambda: self.inputChanged(self.input_a_min))
+		self.input_a_max.setValidator(QRegExpValidator(intRegex, self))
+		self.input_a_max.textChanged.connect(lambda: self.inputChanged(self.input_a_max))
+		self.input_b_min.setValidator(QRegExpValidator(intRegex, self))
+		self.input_b_min.textChanged.connect(lambda: self.inputChanged(self.input_b_min))
+		self.input_b_max.setValidator(QRegExpValidator(intRegex, self))
+		self.input_b_max.textChanged.connect(lambda: self.inputChanged(self.input_b_max))
+		self.input_m_min.setValidator(QRegExpValidator(intRegex, self))
+		self.input_m_min.textChanged.connect(lambda: self.inputChanged(self.input_m_min))
+		self.input_m_max.setValidator(QRegExpValidator(intRegex, self))
+		self.input_m_max.textChanged.connect(lambda: self.inputChanged(self.input_m_max))
+		self.input_f_min.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_f_min.textChanged.connect(lambda: self.inputChanged(self.input_f_min))
+		self.input_f_max.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_f_max.textChanged.connect(lambda: self.inputChanged(self.input_f_max))
+		self.input_fm_min.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_fm_min.textChanged.connect(lambda: self.inputChanged(self.input_fm_min))
+		self.input_fm_max.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_fm_max.textChanged.connect(lambda: self.inputChanged(self.input_fm_max))
+		self.input_c0_min.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_c0_min.textChanged.connect(lambda: self.inputChanged(self.input_c0_min))
+		self.input_c0_max.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_c0_max.textChanged.connect(lambda: self.inputChanged(self.input_c0_max))
+		self.input_cr_min.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_cr_min.textChanged.connect(lambda: self.inputChanged(self.input_cr_min))
+		self.input_cr_max.setValidator(QRegExpValidator(priceRegex, self))
+		self.input_cr_max.textChanged.connect(lambda: self.inputChanged(self.input_cr_max))
+		
+		self.inputList = parent.findChildren(QtWidgets.QLineEdit)
 		self.show()
 
 		stateList = self.db.get_states()
@@ -66,23 +96,7 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 		for state in stateList:
 			self.stateInput.addItem("{:2d}-{:s}".format(state[0],state[1]))
 		self.stateInput.currentIndexChanged.connect(self.stateComboBoxChange)
-
-		self.fixedCost1lb = self.inputChanged(self.fixed_cost1_lb) 
-		self.fixedCost1ub = self.inputChanged(self.fixed_cost1_ub)
-		self.fixedCost2lb = self.inputChanged(self.fixed_cost2_lb)
-		self.fixedCost2ub = self.inputChanged(self.fixed_cost2_ub)
-		self.capacity1lb = self.inputChanged(self.capacity1_lb)
-		self.capacity1ub = self.inputChanged(self.capacity1_ub)
-		self.capacity2lb = self.inputChanged(self.capacity2_lb)
-		self.capacity2ub = self.inputChanged(self.capacity2_ub)
-		self.demandlb = self.inputChanged(self.demand_lb)
-		self.demandub = self.inputChanged(self.demand_ub)
-		self.numberNode1lb = self.inputChanged(self.numbernode1_lb)
-		self.numberNode1ub = self.inputChanged(self.numbernode1_ub)
-		self.numberNode2lb = self.inputChanged(self.numbernode2_lb)
-		self.numberNode2ub = self.inputChanged(self.numbernode2_ub)
-		self.productsClientub = self.inputChanged(self.productsclient_ub)
-		self.stateId = self.stateComboBoxChange()
+		self.stateId = -1
 
 	def stateComboBoxChange(self):
 		item = self.stateInput.currentText()
@@ -90,45 +104,46 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 			self.labelCities.setText("")
 			self.labelMinPop.setText("")
 			self.labelMaxPop.setText("")
-			return -1
+			self.stateId = -1
 		else:
 			stateId = item.split("-")[0]
 			state = self.db.get_state_by_id(stateId)
 			self.labelCities.setText(str(state["nCities"]))
 			self.labelMinPop.setText(str(state["minPop"]))
 			self.labelMaxPop.setText(str(state["maxPop"]))
-			return stateId
+			self.stateId = stateId
 		
 	def inputChanged(self,currentInput):
-		########## PASSAR O VALOR DO ERRO PRA RUNPRESSED ############
-		currentText = currentInput.text()
-		if (len(currentText) == 0):
+		if (currentInput.hasAcceptableInput()):
 			currentInput.setStyleSheet("QLineEdit {background-color:white}")
 		else:
-			try:
-				manipulateValue = float(currentText)
-				print (manipulateValue+1)
-				currentInput.setStyleSheet("QLineEdit {background-color:white}")
-				if self.inputError > 0:
-					self.inputError -= 1 
-			except ValueError:
-				currentInput.setStyleSheet("QLineEdit {border: 1px solid red}")
-				self.inputError += 1
+			currentInput.setStyleSheet("QLineEdit {border: 1px solid red}")
 
 	def cancelPressed(self):
 		self.close()
 
 	def runPressed(self):
-		########## PASSAR O VALOR DE ERRO PARA ESSA FUNCAO ###########
-		if(self.inputError > 0):
+		if(self.stateId == -1):
+			errorFlag = True
+		else:
+			errorFlag = False
+			for lineEdit in self.inputList:
+				if(not lineEdit.hasAcceptableInput()):
+					errorFlag = True
+		if(errorFlag):
 			msg = QMessageBox()
-			msg.setText("As entradas devem ser numéricas")
-			msg.setInformativeText("Erro ao tentar solucionar o problema")
-			msg.setWindowTitle("Erro em alguma entrada do usuário")
-			msg.setDetailedText("Por favor digite apenas números e pontos nas entradas da janela")
+			msg.setText("Erro ao tentar solucionar o problema:")
+			msg.setInformativeText("Todos os campos devem ser preenchidos corretamente, em que campos de custo devem ser preenchidos no formato monetário padrão (XX...X,XX). O estado também deve ser selecionado")
+			msg.setWindowTitle("Erro")
 			msg.exec()
 		else:
-			newWindow4 = solutionWindow(self)
+			msg = QMessageBox()
+			msg.setText("As entradas devem ser numéricas")
+			msg.setInformativeText("asdsadasdsad")
+			msg.setWindowTitle("asdsadasdsad")
+			msg.setDetailedText("asdsadasdsad")
+			msg.exec()
+			# newWindow4 = solutionWindow(self)
 			#ALGORITMO DA SOLUCAO#
 
 class listWindow(QDialog, Ui_listWindow):
