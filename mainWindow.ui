@@ -7,39 +7,57 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>363</height>
+    <height>188</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Tela Principal</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="label">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Aplicativo para Solução do Sistema de Reprocessamento</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="cplexbutton">
       <property name="text">
-       <string>CPLEX</string>
+       <string>Nova Otimização</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="listbutton">
       <property name="text">
-       <string>LISTAR</string>
+       <string>Listar Soluções</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QPushButton" name="exitbutton">
       <property name="text">
-       <string>SAIR</string>
+       <string>Sair</string>
       </property>
      </widget>
     </item>
    </layout>
-   <zorder>listbutton</zorder>
-   <zorder>exitbutton</zorder>
-   <zorder>cplexbutton</zorder>
   </widget>
  </widget>
  <resources/>

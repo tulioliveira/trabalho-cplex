@@ -11,11 +11,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
-        mainWindow.resize(438, 363)
+        mainWindow.resize(438, 188)
         self.centralwidget = QtWidgets.QWidget(mainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setMaximumSize(QtCore.QSize(16777215, 20))
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label.setFont(font)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout.addWidget(self.label)
         self.cplexbutton = QtWidgets.QPushButton(self.centralwidget)
         self.cplexbutton.setObjectName("cplexbutton")
         self.verticalLayout.addWidget(self.cplexbutton)
@@ -25,9 +33,6 @@ class Ui_mainWindow(object):
         self.exitbutton = QtWidgets.QPushButton(self.centralwidget)
         self.exitbutton.setObjectName("exitbutton")
         self.verticalLayout.addWidget(self.exitbutton)
-        self.listbutton.raise_()
-        self.exitbutton.raise_()
-        self.cplexbutton.raise_()
         mainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(mainWindow)
@@ -38,8 +43,9 @@ class Ui_mainWindow(object):
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        mainWindow.setWindowTitle(_translate("mainWindow", "MainWindow"))
-        self.cplexbutton.setText(_translate("mainWindow", "CPLEX"))
-        self.listbutton.setText(_translate("mainWindow", "LISTAR"))
-        self.exitbutton.setText(_translate("mainWindow", "SAIR"))
+        mainWindow.setWindowTitle(_translate("mainWindow", "Tela Principal"))
+        self.label.setText(_translate("mainWindow", "Aplicativo para Solução do Sistema de Reprocessamento"))
+        self.cplexbutton.setText(_translate("mainWindow", "Nova Otimização"))
+        self.listbutton.setText(_translate("mainWindow", "Listar Soluções"))
+        self.exitbutton.setText(_translate("mainWindow", "Sair"))
 

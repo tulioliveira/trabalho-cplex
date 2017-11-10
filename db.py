@@ -84,3 +84,20 @@ class DB(object):
                 _city1Id=city1Id, _city2Id=city2Id, _distance=distance)
         cur.execute(sql)
         self.conn.commit()
+
+    def get_cities_by_population_range(self, stateId, minPop=0, maxPop=sys.maxsize): 
+        cur = self.conn.cursor()
+        sql = "SELECT id, name, lat, lon, pop FROM cities WHERE state_id = {_stateId} AND pop > {_minPop} AND pop < {_maxPop}".format(
+            _stateId=stateId, _minPop=minPop, _maxPop=maxPop)
+        cur.execute(sql)
+        cities = [{"index": idx+1, "cityId": row[0], "name": row[1], "lat": row[2],
+                   "lon": row[3], "pop": row[4]} for idx, row in enumerate(cur.fetchall())]
+        return cities
+
+    def get_distance(self, cityId1, cityId2):
+        cur = self.conn.cursor()
+        sql = "SELECT distance FROM dist WHERE (city1_id = {_cityId1} AND city2_id = {_cityId2}) OR (city1_id = {_cityId2} AND city2_id = {_cityId1})".format(
+            _cityId1=cityId1, _cityId2=cityId2)
+        cur.execute(sql)
+        print("{:d} -> {:d}".format(cityId1, cityId2))
+        return cur.fetchone()[0]

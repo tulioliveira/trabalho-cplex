@@ -11,11 +11,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_cplexWindow(object):
     def setupUi(self, cplexWindow):
         cplexWindow.setObjectName("cplexWindow")
-        cplexWindow.resize(699, 554)
+        cplexWindow.resize(699, 612)
         self.centralwidget = QtWidgets.QWidget(cplexWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(520, 520, 168, 27))
+        self.layoutWidget.setGeometry(QtCore.QRect(520, 570, 168, 27))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -306,6 +306,11 @@ class Ui_cplexWindow(object):
         self.input_m_max.setObjectName("input_m_max")
         self.horizontalLayout_6.addWidget(self.input_m_max)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
+        self.label_30 = QtWidgets.QLabel(self.centralwidget)
+        self.label_30.setGeometry(QtCore.QRect(10, 530, 679, 27))
+        self.label_30.setAlignment(QtCore.Qt.AlignJustify|QtCore.Qt.AlignVCenter)
+        self.label_30.setWordWrap(True)
+        self.label_30.setObjectName("label_30")
         cplexWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(cplexWindow)
@@ -313,9 +318,9 @@ class Ui_cplexWindow(object):
 
     def retranslateUi(self, cplexWindow):
         _translate = QtCore.QCoreApplication.translate
-        cplexWindow.setWindowTitle(_translate("cplexWindow", "MainWindow"))
-        self.cancelButton.setText(_translate("cplexWindow", "CANCEL"))
-        self.runButton.setText(_translate("cplexWindow", "RUN"))
+        cplexWindow.setWindowTitle(_translate("cplexWindow", "Otimização de Sistema Linear"))
+        self.cancelButton.setText(_translate("cplexWindow", "Cancelar"))
+        self.runButton.setText(_translate("cplexWindow", "Executar"))
         self.label_29.setText(_translate("cplexWindow", "Localização dos Pontos e Faixas de Habitantes"))
         self.stateLabel.setText(_translate("cplexWindow", "Estado:"))
         self.label_3.setText(_translate("cplexWindow", "# Cidades:"))
@@ -353,4 +358,5 @@ class Ui_cplexWindow(object):
         self.demand.setText(_translate("cplexWindow", "Reprocessamento (m):"))
         self.label_18.setText(_translate("cplexWindow", "de"))
         self.label_19.setText(_translate("cplexWindow", "a"))
+        self.label_30.setText(_translate("cplexWindow", "Todos os campos devem ser preenchidos, em que campos de custo devem utilizar (.) como separador decimal e os outos campos preenchidos com inteiros positivos não-nulos."))
 

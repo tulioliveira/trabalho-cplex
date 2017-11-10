@@ -3,6 +3,7 @@
 
 import sys
 import db
+import solver
 from PyQt5.QtWidgets import (QWidget, QToolTip, QPushButton, QApplication, QMainWindow, QDialog, QMessageBox, QLineEdit)
 from PyQt5.QtGui import *	
 from PyQt5.QtWebEngine import *
@@ -42,11 +43,11 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 		self.db=db.DB('database.sqlite')
 		self.setWindowTitle("CPLEX")
 		self.setupUi(self)
-		self.cancelButton.clicked.connect(lambda:self.cancelPressed)
+		self.cancelButton.clicked.connect(lambda:self.cancelPressed())
 		self.runButton.clicked.connect(lambda:self.runPressed())
 		
 		intRegex = QRegExp("[1-9]+[0-9]*")
-		priceRegex = QRegExp("([1-9]{1}[0-9]*\,{1}[0-9]{1,2}|[0]{1}\,{1}[0-9]{1,2})")
+		priceRegex = QRegExp("([1-9]+[0-9]*|[1-9]{1}[0-9]*[\.]{1}[0-9]{1,2}|[0]{1}[\.]{1}[0-9]{1,2})")
 		self.inputSupplyPopMin.setValidator(QRegExpValidator(intRegex, self))
 		self.inputSupplyPopMin.textChanged.connect(lambda: self.inputChanged(self.inputSupplyPopMin))
 		self.inputSupplyPopMax.setValidator(QRegExpValidator(intRegex, self))
@@ -133,18 +134,37 @@ class cplexWindow(QMainWindow, Ui_cplexWindow):
 		if(errorFlag):
 			msg = QMessageBox()
 			msg.setText("Erro ao tentar solucionar o problema:")
-			msg.setInformativeText("Todos os campos devem ser preenchidos corretamente, em que campos de custo devem ser preenchidos no formato monetário padrão (XX...X,XX). O estado também deve ser selecionado")
+			msg.setInformativeText("Todos os campos devem ser preenchidos corretamente, em que campos de custo devem utilizar (.) como separador decimal e os outos campos preenchidos com inteiros positivos não-nulos. O estado também deve ser selecionado")
 			msg.setWindowTitle("Erro")
 			msg.exec()
 		else:
-			msg = QMessageBox()
-			msg.setText("As entradas devem ser numéricas")
-			msg.setInformativeText("asdsadasdsad")
-			msg.setWindowTitle("asdsadasdsad")
-			msg.setDetailedText("asdsadasdsad")
-			msg.exec()
-			# newWindow4 = solutionWindow(self)
-			#ALGORITMO DA SOLUCAO#
+			inputData = {
+				"stateId":        int(self.stateId),
+				"supplyPopMin":   int(self.inputSupplyPopMin.text()),
+				"supplyPopMax":   int(self.inputSupplyPopMax.text()),
+				"facilityPopMin": int(self.inputFacilityPopMin.text()),
+				"facilityPopMax": int(self.inputFacilityPopMax.text()),
+				"demandPopMin":   int(self.inputDemandPopMin.text()),
+				"demandPopMax":   int(self.inputDemandPopMax.text()),
+				"fMin":           float(self.input_f_min.text()),
+				"fMax":           float(self.input_f_max.text()),
+				"fmMin":          float(self.input_f_min.text()),
+				"fmMax":          float(self.input_f_max.text()),
+				"c0Min":          float(self.input_c0_min.text()),
+				"c0Max":          float(self.input_c0_max.text()),
+				"crMin":          float(self.input_cr_min.text()),
+				"crMax":          float(self.input_cr_max.text()),
+				"aMin":           int(self.input_a_min.text()),
+				"aMax":           int(self.input_a_max.text()),
+				"bMin":           int(self.input_b_min.text()),
+				"bMax":           int(self.input_b_max.text()),
+				"mMin":           int(self.input_m_min.text()),
+				"mMax":           int(self.input_m_max.text())
+			}
+			
+			self.solver = solver.Solver(inputData)
+			self.solver.exec_cplex()
+			self.solver.plot_sol() 
 
 class listWindow(QDialog, Ui_listWindow):
 	def __init__(self,parent=None):

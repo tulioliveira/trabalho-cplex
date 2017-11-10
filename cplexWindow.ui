@@ -7,18 +7,18 @@
     <x>0</x>
     <y>0</y>
     <width>699</width>
-    <height>554</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Otimização de Sistema Linear</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>520</x>
-      <y>520</y>
+      <y>570</y>
       <width>168</width>
       <height>27</height>
      </rect>
@@ -27,14 +27,14 @@
      <item>
       <widget class="QPushButton" name="cancelButton">
        <property name="text">
-        <string>CANCEL</string>
+        <string>Cancelar</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="runButton">
        <property name="text">
-        <string>RUN</string>
+        <string>Executar</string>
        </property>
       </widget>
      </item>
@@ -722,6 +722,25 @@
       </layout>
      </item>
     </layout>
+   </widget>
+   <widget class="QLabel" name="label_30">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>530</y>
+      <width>679</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Todos os campos devem ser preenchidos, em que campos de custo devem utilizar (.) como separador decimal e os outos campos preenchidos com inteiros positivos não-nulos.</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
  </widget>
