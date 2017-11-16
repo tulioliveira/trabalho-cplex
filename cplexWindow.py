@@ -326,7 +326,7 @@ class Ui_cplexWindow(object):
         self.label_3.setText(_translate("cplexWindow", "# Cidades:"))
         self.label_2.setText(_translate("cplexWindow", "População Mínima:"))
         self.label.setText(_translate("cplexWindow", "População Máxima:"))
-        self.label_4.setText(_translate("cplexWindow", "População Cliente: "))
+        self.label_4.setText(_translate("cplexWindow", "População Fornecedor: "))
         self.label_7.setText(_translate("cplexWindow", "de"))
         self.label_8.setText(_translate("cplexWindow", "a"))
         self.label_5.setText(_translate("cplexWindow", "População Facilidade:"))

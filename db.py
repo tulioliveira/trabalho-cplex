@@ -2,7 +2,7 @@
 import os
 import sys
 import sqlite3
-
+import pickle
 
 class DB(object):
     def __init__(self, fileName):
@@ -101,3 +101,27 @@ class DB(object):
         cur.execute(sql)
         print("{:d} -> {:d}".format(cityId1, cityId2))
         return cur.fetchone()[0]
+
+    def save_solution(self, stateId, data):
+        cur = self.conn.cursor()
+        sql = "INSERT INTO solutions(state_id, data) VALUES (?, ?)"
+        cur.execute(sql, [stateId, pickle.dumps(data, protocol=2)])
+        self.conn.commit()
+        cur = self.conn.cursor()
+        cur.execute('SELECT max(id) FROM solutions')
+        return cur.fetchone()[0]
+
+    def get_solution_by_id(self, solId):
+        cur = self.conn.cursor()
+        sql = "SELECT data FROM solutions WHERE id = {_id}".format(_id=solId)
+        cur.execute(sql)
+        row = cur.fetchone()
+        data = pickle.loads(row[0])
+        return data
+
+    def get_solutions(self):
+        cur = self.conn.cursor()
+        sql = "SELECT sol.id, s.name, sol.created_on FROM solutions sol JOIN states s ON sol.state_id = s.id ORDER BY sol.id DESC"
+        cur.execute(sql)
+        solutions = [{'id': row[0], 'stateName': row[1], 'created_on': row[2]} for row in cur.fetchall()]
+        return solutions

@@ -16,7 +16,7 @@ for stateId in range(1, 13):
 	# approximate radius of earth in km
 	R = 6373.0
 
-	for i in range(1, cityCount):
+	for i in range(0, cityCount):
 		db.insert_distance_row(cities[i]['id'], cities[i]['id'], 0)
 		for j in range (i+1, cityCount):
 			print("city1Id (index):", cities[i]['id'], '(',i,')', "city2Id (index):", cities[j]['id'], '(',j,')')

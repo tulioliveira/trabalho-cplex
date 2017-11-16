@@ -59,10 +59,12 @@ class Solver(object):
         print(self.varParameters["i"])
         print(self.varParameters["j"])
         print(self.varParameters["k"])
+
+        self.calc_costs()
     # -------------------------
-    # Plot the Solution Data on Console
+    # Save the Solution Data on Database
     # -------------------------
-    def plot_sol(self):
+    def save_sol(self):
         w = self.sol["w"]
         x = self.sol["x"]
         y = self.sol["y"]
@@ -126,6 +128,23 @@ class Solver(object):
         print("{:^48}".format("TOTAL COST : ${:.2f}".format(totalCost)))
         print("================================================")
 
+        data = {
+            "totalFacilitiesCost": totalFacilitiesCost,
+            "totalProductsCost": totalProductsCost,
+            "totalUnitsOverflow": totalUnitsOverflow,
+            "totalOverflowCost": totalOverflowCost,
+            "totalCost": totalCost,
+            "w": w,
+            "x": x,
+            "y": y,
+            "varParameters": self.varParameters,
+            "supplyPoints": self.supplyPoints,
+            "facilities": self.facilities,
+            "demandPoints": self.demandPoints
+        }
+
+        return self.db.save_solution(self.varParameters["stateId"], data)
+
     # -------------------------
     # Execute CPLEX for solution
     # -------------------------
@@ -138,7 +157,8 @@ class Solver(object):
         KJ = [(k, j) for k in K for j in J]
 
         # Calculate the costs and other restriction variables
-        c0, cr    = self.calc_costs()                           # Transporting costs per unit
+        c0        = self.costs["c0"]                       # Transporting cost per unit from supply point to facility
+        cr        = self.costs["cr"]                       # Transporting cost per unit from facility to demand point
         f         = [self.facilities[k]["f"] for k in K]   # Fixed cost for facility instalation
         fm        = [self.facilities[k]["fm"] for k in K]  # Variable cost per unit of reprocessed product
         m         = [self.facilities[k]["m"] for k in K]   # Facility Capacity
@@ -235,7 +255,7 @@ class Solver(object):
 
             statusMsg = cpx.solution.get_status_string()
             print(statusMsg)
-            sys.exit(-1)
+            return -1
         else:
             of = cpx.solution.get_objective_value()
             x = cpx.solution.get_values()
@@ -245,8 +265,8 @@ class Solver(object):
             sol["x"] = [(i, k) for (i, k) in IK if x[v_xi[(i, k)]] > 0.9]
             sol["y"] = [(k, j, x[v_yi[(k, j)]])
                         for (k, j) in KJ if x[v_yi[(k, j)]] > 0.001]
-
-        self.sol = sol
+            self.sol = sol
+            return self.save_sol()
 
     # -------------------------
     # Calculate Costs
@@ -266,4 +286,4 @@ class Solver(object):
             for j in J:
                 distance = self.db.get_distance(self.demandPoints[j]["cityId"], self.facilities[k]["cityId"])
                 cr[k][j] = distance * random.uniform(self.varParameters["crMin"], self.varParameters["crMax"])
-        return c0, cr
+        self.costs = {"c0" : c0, "cr": cr}
